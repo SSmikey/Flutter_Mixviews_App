@@ -8,7 +8,6 @@ class AllImagesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // ตัวอย่างรายการรูปภาพ (สามารถแทนที่ด้วยข้อมูลจริง)
     final List<String> imageUrls = [
-      'assets/images/p1.jpg',
       'assets/images/p2.png',
       'assets/images/p3.jpg',
       'assets/images/p4.jpg',
@@ -29,6 +28,7 @@ class AllImagesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('All Images'),
+        backgroundColor: Colors.deepOrangeAccent,
       ),
       body: Column(
         children: [

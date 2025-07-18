@@ -14,7 +14,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final imageList = <String>[
-      'assets/images/p1.jpg',
       'assets/images/p2.png',
       'assets/images/p3.jpg',
       'assets/images/p4.jpg',
@@ -38,12 +37,26 @@ class MainApp extends StatelessWidget {
           title: Text("My list views app"),
           backgroundColor: Colors.deepOrangeAccent,
           actions: [
-            IconButton(
-              icon: Icon(Icons.photo_library),
-              tooltip: 'ดูรูปทั้งหมด',
-              onPressed: () {
-                Get.to(() => AllImagesPage(imageList: imageList));
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TextButton.icon(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.deepOrangeAccent.withOpacity(0.15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                ),
+                icon: const Icon(Icons.photo_library, color: Color.fromARGB(255, 0, 0, 0)),
+                label: const Text(
+                  'ดูรูปทั้งหมด',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0)),
+                ),
+                onPressed: () {
+                  Get.to(() => AllImagesPage(imageList: imageList));
+                },
+              ),
             ),
           ],
         ),
@@ -64,7 +77,7 @@ class MainApp extends StatelessWidget {
                             crossAxisSpacing: 12,
                             childAspectRatio: 1,
                           ),
-                          itemCount: 4,
+                          itemCount: 8,
                           itemBuilder: (context, index) {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(12),
