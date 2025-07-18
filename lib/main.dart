@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:listview_app/AllImagesPage.dart';
 import 'package:get/get.dart';
+import 'package:listview_app/components/drawer.dart';
 
 
 void main() {
@@ -32,6 +33,16 @@ class MainApp extends StatelessWidget {
     ];
 
     return GetMaterialApp(
+      getPages: [
+        GetPage(
+          name: '/',
+          page: () => MainApp(),
+        ),
+        GetPage(
+          name: '/allimages',
+          page: () => AllImagesPage(imageList: (Get.arguments as List).cast<String>()),
+        ),
+      ],
       home: Scaffold(
         appBar: AppBar(
           title: Text("My list views app"),
@@ -50,78 +61,75 @@ class MainApp extends StatelessWidget {
                 ),
                 icon: const Icon(Icons.photo_library, color: Color.fromARGB(255, 0, 0, 0)),
                 label: const Text(
-                  'ดูรูปทั้งหมด',
+                  'All images',
                   style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0)),
                 ),
                 onPressed: () {
-                  Get.to(() => AllImagesPage(imageList: imageList));
+                  Get.toNamed('/allimages', arguments: imageList);
                 },
               ),
             ),
           ],
         ),
-        // ...existing code...
-                body: Column(
-                  children: [
-                    
-                    // GridView Section
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: SizedBox(
-                        height: 180,
-                        child: GridView.builder(
-                          scrollDirection: Axis.horizontal,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 12,
-                            crossAxisSpacing: 12,
-                            childAspectRatio: 1,
-                          ),
-                          itemCount: 8,
-                          itemBuilder: (context, index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.asset(
-                              imageList[index],
-                              fit: BoxFit.cover,
-                              ),
-                            );
-                          },
+        drawer: MyDrawer(imageList: imageList),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                height: 180,
+                child: GridView.builder(
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    childAspectRatio: 1,
+                  ),
+                  itemCount: 8,
+                  itemBuilder: (context, index) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        imageList[index],
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 100,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.deepOrangeAccent,
+                        child: Text(
+                          '${index + 1}',
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
+                      title: Text('รายการที่ ${index + 1}'),
+                      subtitle: Text('รายละเอียดของรายการที่ ${index + 1}'),
+                      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepOrangeAccent),
+                      onTap: () {
+                        // สามารถเพิ่ม action เมื่อกดแต่ละรายการได้ที่นี่
+                      },
                     ),
-                    // ListView Section
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: 100,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: Colors.deepOrangeAccent,
-                                child: Text(
-                                  '${index + 1}',
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              title: Text('รายการที่ ${index + 1}'),
-                              subtitle: Text('รายละเอียดของรายการที่ ${index + 1}'),
-                              trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepOrangeAccent),
-                              onTap: () {
-                                // สามารถเพิ่ม action เมื่อกดแต่ละรายการได้ที่นี่ 9vo
-                              },
-                            ),
-                          );
-                        }
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

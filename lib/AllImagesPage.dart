@@ -72,7 +72,7 @@ class AllImagesPage extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: const Text(
-                  'ย้อนกลับ',
+                  'Back',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
